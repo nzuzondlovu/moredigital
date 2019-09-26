@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
-use App\Requests\StoreProduct;
+use App\Http\Requests\StoreProduct;
 
 class ProductController extends Controller
 {
@@ -37,7 +37,15 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            $product = Product::create($validated);
+        } catch (Exception $e) {
+            return back()->withErrors();
+        }
+
+        $this->index();
     }
 
     /**
@@ -46,9 +54,16 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return view('dashboard.show', ['product' => $product]);
+        $product = Product::find($id);
+
+        if ($product) {
+            return view('dashboard.show', ['product' => $product]);
+        } else {
+            return redirect()->back()->with('failure', ['Ooops there was a problem getting the product.']);
+        }
+
     }
 
     /**
