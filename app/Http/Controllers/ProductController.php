@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProduct;
 use App\Product;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreProduct;
 
 class ProductController extends Controller
 {
@@ -59,7 +59,12 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         if ($product) {
-            return view('dashboard.show', ['product' => $product]);
+            $bids = $product->bids;
+
+            return view('dashboard.show', [
+                'bids'    => $bids,
+                'product' => $product,
+            ]);
         } else {
             return redirect()->back()->with('failure', ['Ooops there was a problem getting the product.']);
         }
@@ -72,9 +77,15 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        return view('dashboard.edit');
+        $product = Product::find($id);
+
+        if ($product) {
+            return view('dashboard.edit', ['product' => $product]);
+        } else {
+            return redirect()->back()->with('failure', ['Ooops there was a problem getting the product.']);
+        }
     }
 
     /**
@@ -84,9 +95,25 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProduct $request, Product $product)
+    public function update(StoreProduct $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        if ($product) {
+            $validated = $request->validated();
+
+            $product->name        = $validated['name'];
+            $product->sku         = $validated['sku'];
+            $product->price       = $validated['price'];
+            $product->description = $validated['description'];
+            $product->file        = $validated['file'];
+
+            $product->save();
+
+            $this->show($product->id);
+        } else {
+            return redirect()->back()->with('failure', ['Ooops there was a problem updating the product.']);
+        }
     }
 
     /**
@@ -95,8 +122,17 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if ($product) {
+            $product->delete();
+
+            return redirect()->back()->with('success', ['Ooops there was a problem updating the product.']);
+        } else {
+            return redirect()->back()->with('failure', ['Ooops there was a problem updating the product.']);
+        }
+
     }
 }

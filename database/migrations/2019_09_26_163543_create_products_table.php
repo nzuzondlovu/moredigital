@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('sku');
             $table->text('description');
             $table->decimal('price', 8, 2);
+            $table->string('file');
             $table->timestamps();
         });
     }

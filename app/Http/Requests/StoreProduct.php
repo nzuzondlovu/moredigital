@@ -28,6 +28,7 @@ class StoreProduct extends FormRequest
             'sku'         => 'required',
             'price'       => 'required',
             'description' => 'required',
+            'file'        => 'nullable',
         ];
     }
 }

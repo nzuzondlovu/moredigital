@@ -10,6 +10,6 @@ class Product extends Model
 
     public function bids()
     {
-        return $this->hasMany('App\Bid', 'product_id', 'id'));
+        return $this->hasMany('App\Bid', 'product_id', 'id');
     }
 }

@@ -29,7 +29,9 @@ Route::prefix('dashboard')->group(function () {
 
     Route::get('product/{id}/edit', 'ProductController@edit')->name('product.edit');
 
-    Route::delete('product/{id}', 'ProductController@destroy')->name('product.destroy');
+    Route::post('product/{id}/update', 'ProductController@update')->name('product.update');
+
+    Route::delete('product/{id}/delete', 'ProductController@destroy')->name('product.destroy');
 
 });
 

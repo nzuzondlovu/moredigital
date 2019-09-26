@@ -29,7 +29,7 @@
         <tr>
           <td>{{ $product->id }}</td>
           <td>
-            <img src="{{ $product->id }}">
+            <img src="{{ $product->file }}">
           </td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->sku }}</td>
@@ -38,6 +38,8 @@
           <td>sit</td>
           <td>
             <a class="btn btn-primary" href="product/{{ $product->id }}">Show Product</a>
+            <a class="btn btn-warning" href="product/{{ $product->id }}/edit">Edit Product</a>
+            <a class="btn btn-danger" href="product/{{ $product->id }}/delete">Delete Product</a>
           </td>
         </tr>
         @endforeach
