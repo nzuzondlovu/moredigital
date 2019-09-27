@@ -29,7 +29,7 @@
         <tr>
           <td>{{ $product->id }}</td>
           <td>
-            <img src="{{ $product->file }}">
+            <img src="{{ asset("/storage/$product->file") }}" class="img-thumbnail" style="width: 150px">
           </td>
           <td>{{ $product->name }}</td>
           <td>{{ $product->sku }}</td>
@@ -37,9 +37,9 @@
           <td>R {{ $product->price }}</td>
           <td>sit</td>
           <td>
-            <a class="btn btn-primary" href="product/{{ $product->id }}">Show Product</a>
-            <a class="btn btn-warning" href="product/{{ $product->id }}/edit">Edit Product</a>
-            <a class="btn btn-danger" href="product/{{ $product->id }}/delete">Delete Product</a>
+            <a class="btn btn-primary" href="{{ route('product.show', $product->id) }}">Show Product</a>
+            <a class="btn btn-warning" href="{{ route('product.edit', $product->id) }}">Edit Product</a>
+            <a class="btn btn-danger" href="{{ route('product.destroy', $product->id) }}">Delete Product</a>
           </td>
         </tr>
         @endforeach

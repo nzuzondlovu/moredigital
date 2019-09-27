@@ -3,11 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProduct;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,12 +52,17 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         try {
+            if ($request->file) {
+                $path              = Storage::putFile('public/files', new File($request['file']));
+                $validated['file'] = substr($path, 7);
+            }
+
             $product = Product::create($validated);
         } catch (Exception $e) {
             return back()->withErrors();
         }
 
-        $this->index();
+        return $this->index();
     }
 
     /**

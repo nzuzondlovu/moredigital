@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="card" style="width: 100%;">
-        <img class="card-img-top" src="{{ $product->file }}" alt="Card image cap">
+        <img class="card-img-top" src="{{ asset("/storage/$product->file") }}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">{{ $product->name }}</h5>
           <p class="card-text">{{ $product->description }}</p>
