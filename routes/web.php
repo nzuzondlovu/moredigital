@@ -11,9 +11,11 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/product/{id}', 'HomeController@show')->name('show');
+
+Route::post('/bid/{id}', 'BidController@store')->name('bid.store');
 
 // BMS / Dashboard
 

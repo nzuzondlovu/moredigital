@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -23,6 +14,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $products = Product::all();
+        return view('welcome', ['products' => $products]);
+    }
+
+    public function show($id)
+    {
+        $product = Product::find($id);
+
+        if ($product) {
+
+            $bids = $product->bids;
+
+            return view('show', [
+                'bids' => $bids,
+                'product' => $product,
+            ]);
+        }
+
+        return redirect()->back()->with('failure', 'Product not found.');
     }
 }

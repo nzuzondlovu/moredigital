@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bid;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBid;
 
 class BidController extends Controller
 {
@@ -33,7 +34,7 @@ class BidController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBid $request, $id)
     {
         //
     }
