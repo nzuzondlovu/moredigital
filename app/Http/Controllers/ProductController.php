@@ -83,7 +83,7 @@ class ProductController extends Controller
                 'product' => $product,
             ]);
         } else {
-            return redirect()->back()->with('failure', ['Ooops there was a problem getting the product.']);
+            return redirect()->back()->with('failure', 'Ooops there was a problem getting the product.');
         }
 
     }
@@ -101,7 +101,7 @@ class ProductController extends Controller
         if ($product) {
             return view('dashboard.edit', ['product' => $product]);
         } else {
-            return redirect()->back()->with('failure', ['Ooops there was a problem getting the product.']);
+            return redirect()->back()->with('failure', 'Ooops there was a problem getting the product.');
         }
     }
 
@@ -119,6 +119,11 @@ class ProductController extends Controller
         if ($product) {
             $validated = $request->validated();
 
+            if ($request->file) {
+                $path              = Storage::putFile('public/files', new File($request['file']));
+                $validated['file'] = substr($path, 7);
+            }
+
             $product->name        = $validated['name'];
             $product->sku         = $validated['sku'];
             $product->price       = $validated['price'];
@@ -127,9 +132,9 @@ class ProductController extends Controller
 
             $product->save();
 
-            $this->show($product->id);
+            return $this->show($product->id);
         } else {
-            return redirect()->back()->with('failure', ['Ooops there was a problem updating the product.']);
+            return redirect()->back()->with('failure', 'Ooops there was a problem updating the product.');
         }
     }
 
@@ -146,9 +151,9 @@ class ProductController extends Controller
         if ($product) {
             $product->delete();
 
-            return redirect()->back()->with('success', ['Ooops there was a problem updating the product.']);
+            return redirect()->back()->with('success', 'Product deleted successfully.');
         } else {
-            return redirect()->back()->with('failure', ['Ooops there was a problem updating the product.']);
+            return redirect()->back()->with('failure', 'Ooops there was a problem deleting the product.');
         }
 
     }
