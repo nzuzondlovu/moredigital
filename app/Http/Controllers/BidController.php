@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bid;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBid;
 
@@ -36,7 +37,20 @@ class BidController extends Controller
      */
     public function store(StoreBid $request, $id)
     {
-        //
+        $product   = Product::find($id);
+        $validated = $request->validated();
+
+        $bid = $product->bids()->create([
+            'email'  => $validated['email'],
+            'amount' => $validated['amount'],
+        ]);
+
+        if ($bid) {
+
+            return redirect()->back()->with('success', 'Successfully added your bid.');
+        }
+
+        return redirect()->back()->with('failure', 'Ooops there was an error adding your bid.');
     }
 
     /**

@@ -35,8 +35,8 @@
         <tr>
           <td>{{ $bid->id }}</td>
           <td>{{ $bid->email }}</td>
-          <td>R {{ $bid->price }}</td>
-          <td>{{ $bid->date }}</td>
+          <td>R {{ $bid->amount }}</td>
+          <td>{{ $bid->created_at }}</td>
         </tr>
         @endforeach
         </tbody>
