@@ -47,6 +47,8 @@ class BidController extends Controller
 
         if ($bid) {
 
+            setcookie('bid-' . $id, $validated['email'], time() + (86400 * 30), "/"); // 86400 = 1 day
+
             return redirect()->back()->with('success', 'Successfully added your bid.');
         }
 

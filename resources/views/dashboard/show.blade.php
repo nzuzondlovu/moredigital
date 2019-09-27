@@ -19,9 +19,9 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Views : {{ $product->id }}</li>
-          <li class="list-group-item">Highest Bid : {{ $product->id }}</li>
-          <li class="list-group-item">Average Bid : {{ $product->id }}</li>
-          <li class="list-group-item">Lowest Bid : {{ $product->id }}</li>
+          <li class="list-group-item">Highest Bid : {{ $bids->max('amount') }}</li>
+          <li class="list-group-item">Average Bid : {{ $bids->avg('amount') }}</li>
+          <li class="list-group-item">Lowest Bid : {{ $bids->min('amount') }}</li>
         </ul>
       </div>
     </div>

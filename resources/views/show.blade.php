@@ -12,9 +12,9 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Views : {{ $product->id }}</li>
-          <li class="list-group-item">Highest Bid : {{ $product->id }}</li>
-          <li class="list-group-item">Average Bid : {{ $product->id }}</li>
-          <li class="list-group-item">Lowest Bid : {{ $product->id }}</li>
+          <li class="list-group-item">Highest Bid : {{ $bids->max('amount') }}</li>
+          <li class="list-group-item">Average Bid : {{ $bids->avg('amount') }}</li>
+          <li class="list-group-item">Lowest Bid : {{ $bids->min('amount') }}</li>
         </ul>
       </div>
     </div>
@@ -60,6 +60,8 @@
             </ul>
         </div>
         @endif
+
+        @if(!isset($_COOKIE['bid-'.$product->id]))
           <form action="{{ route('bid.store', $product->id) }}" method="post">
             @csrf
               <div class="form-group">
@@ -74,6 +76,9 @@
                 <button class="btn btn-primary" type="submit">Submit Bid</button>
               </div>
           </form>
+        @else
+            You have already placed a bid.
+        @endif
       </div>
   </div>
 </div>
