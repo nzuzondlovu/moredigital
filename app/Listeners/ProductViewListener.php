@@ -16,9 +16,11 @@ class ProductViewListener
      */
     public function handle($event)
     {
-        Product::where($event->product->id)
+        $views = $event->product->views + 1;
+
+        Product::where('id', $event->product->id)
         ->update([
-            'views' => ($event->product->views + 1)
+            'views' => $views
         ]);
     }
 }

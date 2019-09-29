@@ -44,7 +44,7 @@
           <td>{{ $product->sku }}</td>
           <td>{{ $product->description }}</td>
           <td>R {{ $product->price }}</td>
-          <td>sit</td>
+          <td>{{ $product->views }}</td>
           <td>
             <a class="btn btn-primary" href="{{ route('product.show', $product->id) }}">Show Product</a>
             <a class="btn btn-warning" href="{{ route('product.edit', $product->id) }}">Edit Product</a>
