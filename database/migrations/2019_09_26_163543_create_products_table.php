@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->string('file');
+            $table->bigInteger('views')->default(0);
             $table->timestamps();
         });
     }

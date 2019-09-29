@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Events\ProductViewEvent;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,8 @@ class HomeController extends Controller
         if ($product) {
 
             $bids = $product->bids;
+
+            event(new ProductViewEvent($product));
 
             return view('show', [
                 'bids' => $bids,
